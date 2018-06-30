@@ -79,8 +79,13 @@ public class LinguistTest {
 		String wrapText = (String)new Padder("", "centre", 40, "*").work();
 		String wrappedText = (String)new Wrapper(wrapText, 10).work();
 		System.out.println(wrappedText);
+		
 		System.out.println("\r\nWrapping the same String to 20 characters...\r\n");
 		wrappedText = (String)new Wrapper(wrapText, 20).work();
+		System.out.println(wrappedText);
+		
+		System.out.println("\r\nWrapping the header from before to 5 characters...\r\n");
+		wrappedText = (String)new Wrapper(tmpHeader, 5).work();
 		System.out.println(wrappedText);
 	}
 
