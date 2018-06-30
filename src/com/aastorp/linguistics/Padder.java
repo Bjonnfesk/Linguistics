@@ -3,27 +3,22 @@
  */
 package com.aastorp.linguistics;
 
-import javax.swing.JOptionPane;
-
 /**
- * Pads a String (with spaces) to the specified length, either on 
- * the left side, right side or in the center, trimming the String 
+ * Pads a String (with spaces by default) to the specified length, either on 
+ * the left side, right side or so the String is centred, trimming the String 
  * if it is too long. If the String ends in "()", Padder assumes 
  * it is a function name, and will retain the suffix even if these 
  * characters would normally be removed due to the String being 
- * too long. This Linguist understands both American and British
- * spelling conventions.
+ * too long, except when centre-padding. This Linguist understands 
+ * both American and British spelling conventions.
  *
  * @author Bjørn Aastorp
  * 
  */
-public class Padder extends TextFormatter {
+public class Padder extends WidthTextFormatter {
 	
-	/**  The side to pad on: 0 = left, 1 = right, 2 = center. */
+	/**  The side to pad on: 0 = left, 1 = right, 2 = centre. */
 	private int ps;
-	
-	/**  The width of the resulting String. */
-	private int width;
 	
 	/** The character to pad with */
 	private String pc = " ";
@@ -37,26 +32,22 @@ public class Padder extends TextFormatter {
 	 * 
 	 */
 	public Padder(String stringToPad, String padSide, int width) {
-		final String F = "__constructor";
+		super(stringToPad, width);
 		this.setPadSide(padSide.toLowerCase());
-		this.setWidth(width);
-		this.setUnmodifiedString(stringToPad);
 	}
 	
 	/**
 	 * Instantiates a new padder.
 	 *	
 	 * @param stringToPad The string to pad.
-	 * @param padSide The side to pad the string on. Valid values are "left", "right" and "center".
-	 * @param width The resulting width of the string after it is padded.
-	 * @param padCharacter The character to pad the string with.
+	 * @param padSide The side to pad the String on. Valid values are "left", "right" and "center"/"centre".
+	 * @param width The desired width of the String after padding.
+	 * @param padCharacter The character(s) to pad the String with.
 	 * 
 	 */
 	public Padder(String stringToPad, String padSide, int width, String padCharacter) {
-		final String F = "__constructor";
+		super(stringToPad, width);
 		this.setPadSide(padSide);
-		this.setWidth(width);
-		this.setUnmodifiedString(stringToPad);
 		this.setPadCharacter(padCharacter);
 	}
 	
@@ -65,7 +56,6 @@ public class Padder extends TextFormatter {
 	 */
 	@Override
 	public Object work() {
-		final String F = "work";
 		switch (this.getPadSide()) {
 		//Left, Right & Centre
 		case "left":
@@ -90,25 +80,13 @@ public class Padder extends TextFormatter {
 	 * @return The padded String
 	 */
 	private String leftPad() {
-		final String F = "leftPad";
-		/*if (this.getUnmodifiedString().length() > this.getWidth()) {
-			if (this.getUnmodifiedString().substring(this.getUnmodifiedString().length() - 2, this.getUnmodifiedString().length()).equals("()")) {
-				return String.format("%" + (this.getWidth() - 3) + "." + (this.getWidth() - 3) + "s", this.getUnmodifiedString()) + "…()";
-			} else {
-				return String.format("%" + (this.getWidth() - 1) + "." + (this.getWidth() - 1) + "s", this.getUnmodifiedString()) + "…";
-			} //yeeeeeeeaaaaaaaaaa...... that's unintelligible.
-		} else if (this.getUnmodifiedString().length() == 2) {
-			return String.format("%" + this.getWidth() + "." + this.getWidth() + "s", "");
-		} else {
-			return String.format("%" + this.getWidth() + "." + this.getWidth() + "s", this.getUnmodifiedString());
-		}*/
 		StringBuilder sb = new StringBuilder();
 		if (this.getUnmodifiedString().length() == this.getWidth()) {
 			//string is ALREADY the right length...
 			return this.getUnmodifiedString();
 		} else if (this.getUnmodifiedString().length() < this.getWidth()) {
 			//string is too short...
-			for (int i = this.getUnmodifiedString().length(); i < this.getWidth(); i++) {
+			for (int i = this.getUnmodifiedString().length(); i < this.getWidth(); i = i + this.getPadCharacter().length()) {
 				//add the amount of characters required....
 				sb.append(this.pc);
 			}
@@ -126,7 +104,7 @@ public class Padder extends TextFormatter {
 			}
 		}
 		if (sb.length() != this.getWidth()) {
-			JOptionPane.showMessageDialog(null, "Got the wrong width: " + sb.length() + ", should be: " + this.getWidth());
+			System.out.println("Got the wrong width: " + sb.length() + ", should be: " + this.getWidth());
 		}
 		return sb.toString();
 		
@@ -139,7 +117,6 @@ public class Padder extends TextFormatter {
 	 * @return The padded String
 	 */
 	private String centerPad() {
-		final String F = "centerPad";
 		if (
 			this.getUnmodifiedString() == null || 
 			this.getWidth() <= this.getUnmodifiedString().length()
@@ -148,7 +125,7 @@ public class Padder extends TextFormatter {
 			return this.getUnmodifiedString();
 		}
 		StringBuilder sb = new StringBuilder(this.getWidth());
-		for (int i = 0; i < (this.getWidth() - this.getUnmodifiedString().length()) / 2; i++) {
+		for (int i = 0; i < (this.getWidth() - this.getUnmodifiedString().length()) / 2; i = i + this.getPadCharacter().length()) {
 			sb.append(this.getPadCharacter());
 		}
 		sb.append(this.getUnmodifiedString());
@@ -156,7 +133,7 @@ public class Padder extends TextFormatter {
 			sb.append(this.getPadCharacter());
 		}
 		if (sb.length() != this.getWidth()) {
-			JOptionPane.showMessageDialog(null, "Got the wrong width: " + sb.length() + ", should be: " + this.getWidth());
+			System.out.println("Got the wrong width: " + sb.length() + ", should be: " + this.getWidth());
 		}
 		return sb.toString();
 	}
@@ -170,18 +147,6 @@ public class Padder extends TextFormatter {
 	 * @return The padded String
 	 */
 	private String rightPad() {
-		final String F = "rightPad";
-//		if (this.getUnmodifiedString().length() > this.getWidth()) {
-//			if (this.getUnmodifiedString().substring(this.getUnmodifiedString().length() - 2, this.getUnmodifiedString().length()).equals("()")) {
-//				return String.format("%-" + (this.getWidth() - 3) + "." + (this.getWidth() - 3) + "s", this.getUnmodifiedString()) + "…()";
-//			} else {
-//				return String.format("%-" + (this.getWidth() - 1) + "." + (this.getWidth() - 1) + "s", this.getUnmodifiedString()) + "…";
-//			}
-//		} else if (this.getUnmodifiedString().length() == 2) {
-//			return String.format("%-" + this.getWidth() + "." + this.getWidth() + "s", "");
-//		} else {
-//			return String.format("%-" + this.getWidth() + "." + this.getWidth() + "s", this.getUnmodifiedString());
-//		}
 		StringBuilder sb = new StringBuilder();
 		if (this.getUnmodifiedString().length() == this.getWidth()) {
 			//string is ALREADY the right length...
@@ -189,7 +154,7 @@ public class Padder extends TextFormatter {
 		} else if (this.getUnmodifiedString().length() < this.getWidth()) {
 			//string is too short...
 			sb.append(this.getUnmodifiedString());
-			for (int i = this.getUnmodifiedString().length(); i < this.getWidth(); i++) {
+			for (int i = this.getUnmodifiedString().length(); i < this.getWidth(); i = i + this.getPadCharacter().length()) {
 				//add the amount of characters required....
 				sb.append(this.pc);
 			}
@@ -206,7 +171,7 @@ public class Padder extends TextFormatter {
 			}
 		}
 		if (sb.length() != this.getWidth()) {
-			JOptionPane.showMessageDialog(null, "Got the wrong width: " + sb.length() + ", should be: " + this.getWidth());
+			System.out.println("Got the wrong width: " + sb.length() + ", should be: " + this.getWidth());
 		}
 		return sb.toString();
 	}
@@ -217,7 +182,6 @@ public class Padder extends TextFormatter {
 	 * @return The side to pad on of the Padder.
 	 */
 	public String getPadSide() {
-		final String F = "getPadSide";
 		switch (this.ps) {
 		case 0:
 			return "left";
@@ -236,7 +200,6 @@ public class Padder extends TextFormatter {
 	 * @param ps The new side to pad on.
 	 */
 	public void setPadSide(String ps) {
-		final String F = "setPadSide";
 		switch (ps) {
 		case "left":
 			this.ps = 0;
@@ -253,32 +216,11 @@ public class Padder extends TextFormatter {
 	}
 
 	/**
-	 * Gets the resulting width of the string, after padding.
-	 *
-	 * @return The resulting width of the resulting String of the Padder.
-	 */
-	public int getWidth() {
-		final String F = "getWidth";
-		return width;
-	}
-
-	/**
-	 * Sets the desired resulting width of the string, after padding.
-	 *
-	 * @param ml The new maximum length of the resulting String.
-	 */
-	public void setWidth(int ml) {
-		final String F = "setWidth";
-		this.width = ml;
-	}
-
-	/**
 	 * Gets the pad character in use by this Padder.
 	 * 
 	 * @return The character used by this Padder to pad strings.
 	 */
 	public String getPadCharacter() {
-		final String F = "getPadCharacter";
 		return pc;
 	}
 
@@ -288,7 +230,6 @@ public class Padder extends TextFormatter {
 	 * @param pc The desired character used by this Padder to pad strings.
 	 */
 	public void setPadCharacter(String pc) {
-		final String F = "setPadCharacter";
 		this.pc = pc;
 	}
 

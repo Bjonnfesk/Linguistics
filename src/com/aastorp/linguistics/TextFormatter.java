@@ -1,8 +1,8 @@
 package com.aastorp.linguistics;
 
-// TODO: Auto-generated Javadoc
+// 
 /**
- * The Class TextFormatter.
+ * Base class for TextFormatters such as Wrappers.
  */
 public abstract class TextFormatter extends Linguist {
 
@@ -12,8 +12,8 @@ public abstract class TextFormatter extends Linguist {
 	/**
 	 * Instantiates a new text formatter.
 	 */
-	public TextFormatter() {
-		super();
+	public TextFormatter(String unmodifiedString) {
+		this.setUnmodifiedString(unmodifiedString);
 	}
 	
 	/**
@@ -22,17 +22,15 @@ public abstract class TextFormatter extends Linguist {
 	 * @return The unmodified String of the TextFormatter.
 	 */
 	public String getUnmodifiedString() {
-		final String F = "getUnmodifiedString";
 		return us;
 	}
 
 	/**
-	 * Sets the us.
+	 * Sets the unmodifiedString.
 	 *
 	 * @param us The new unmodified String.
 	 */
 	public void setUnmodifiedString(String us) {
-		final String F = "setUnmodifiedString";
 		this.us = us;
 	}
 

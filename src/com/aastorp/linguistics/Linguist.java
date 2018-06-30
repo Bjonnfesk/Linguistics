@@ -20,7 +20,7 @@ public abstract class Linguist {
 	/**
 	 * Do the work that this Linguist is an expert at, determined 
 	 * by its class which is a subclass of Linguist. A Padder pads
-	 * a String, an Inflector pluralises a unit according to a value...
+	 * a String, an Inflector inflects a noun...
 	 * 
 	 * @return The result of the Linguist's work.
 	 */

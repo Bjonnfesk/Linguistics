@@ -4,7 +4,7 @@
 package com.aastorp.linguistics;
 
 /**
- * Correctly inflects nouns based on their amounts.
+ * Attempts to correctly inflect nouns based on their amounts.
  *
  * @author Bjørn Aastorp
  */
@@ -23,25 +23,25 @@ public class Inflector extends Linguist {
 	 * @param amount The amount this Inflector will inflect the noun to.
 	 */
 	public Inflector(String noun, Object amount) {
-		this.setUnit(noun);
+		this.setNoun(noun);
 		this.setAmount(amount);
 	}
 	
 	/**
-	 * Gets the plural-suffixed unit.
+	 * Gets the plural-suffixed noun.
 	 *
-	 * @return The suffixed unit
+	 * @return The suffixed noun
 	 */
-	private String getSuffixedUnit() {
-		if (this.getUnit().equals("sheep")) {
-			return this.getUnit();
+	private String getSuffixedNoun() {
+		if (this.getNoun().equals("sheep")) {
+			return this.getNoun();
 		}
-		if (this.getUnit().substring(this.getUnit().length() - 1, this.getUnit().length()).equals("y") || this.getUnit().substring(this.getUnit().length() - 1, this.getUnit().length()).equals("Y")) {
-			return this.getUnit().substring(0, this.getUnit().length() - 1) + "ies";
-		} else if (this.getUnit().substring(this.getUnit().length() - 2, this.getUnit().length()).equals("ss")) {
-			return this.getUnit() + "es";
+		if (this.getNoun().substring(this.getNoun().length() - 1, this.getNoun().length()).equals("y") || this.getNoun().substring(this.getNoun().length() - 1, this.getNoun().length()).equals("Y")) {
+			return this.getNoun().substring(0, this.getNoun().length() - 1) + "ies";
+		} else if (this.getNoun().substring(this.getNoun().length() - 2, this.getNoun().length()).equals("ss")) {
+			return this.getNoun() + "es";
 		} else {
-			return this.getUnit() + "s";
+			return this.getNoun() + "s";
 		}
 	}
 
@@ -57,7 +57,7 @@ public class Inflector extends Linguist {
 			this.getAmount().getClass() == Integer.class
 		) 
 		{
-			if ((int)this.getAmount() == 1) return this.getUnit(); else return getSuffixedUnit();
+			if ((int)this.getAmount() == 1) return this.getNoun(); else return getSuffixedNoun();
 		} 
 		else if
 		(
@@ -65,7 +65,7 @@ public class Inflector extends Linguist {
 			this.getAmount().getClass() == Long.class
 		)
 		{
-			if ((long)this.getAmount() == (long)1) return this.getUnit(); else return getSuffixedUnit();
+			if ((long)this.getAmount() == (long)1) return this.getNoun(); else return getSuffixedNoun();
 		}
 		else if
 		(
@@ -73,14 +73,14 @@ public class Inflector extends Linguist {
 			this.getAmount().getClass() == Double.class 
 		)
 		{
-			if (Math.floor(Double.valueOf((Double)this.getAmount())) == 1) return this.getUnit(); else return getSuffixedUnit();
+			if (Math.floor(Double.valueOf((Double)this.getAmount())) == 1) return this.getNoun(); else return getSuffixedNoun();
 		}
 		else if 
 		(
 			this.getAmount().getClass() == String.class
 		)
 		{
-			if (Math.floor(Integer.valueOf((String)this.getAmount())) == 1) return this.getUnit(); else return getSuffixedUnit();
+			if (Math.floor(Integer.valueOf((String)this.getAmount())) == 1) return this.getNoun(); else return getSuffixedNoun();
 		}
 		else return "Inflector cannot pluralise this.";
 	}
@@ -90,19 +90,19 @@ public class Inflector extends Linguist {
 	 *
 	 * @return The noun of the Inflector
 	 */
-	public String getUnit() {
-		final String F = "getUnit";
+	public String getNoun() {
+		final String F = "getNoun";
 		return noun;
 	}
 
 	/**
-	 * Sets the unit.
+	 * Sets the noun.
 	 *
-	 * @param unit the new unit
+	 * @param noun The new noun.
 	 */
-	public void setUnit(String unit) {
-		final String F = "setUnit";
-		this.noun = unit;
+	public void setNoun(String noun) {
+		final String F = "setNoun";
+		this.noun = noun;
 	}
 
 	/**
