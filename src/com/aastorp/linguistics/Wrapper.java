@@ -4,7 +4,7 @@
 package com.aastorp.linguistics;
 
 /**
- * Wraps strings to fit within given width (in characters).
+ * Wraps a String to fit within given width (in characters).
  * @author Bjørn Aastorp
  *
  */
@@ -37,6 +37,7 @@ public class Wrapper extends WidthTextFormatter {
 	}
 
 	/* (non-Javadoc)
+	 * 
 	 * @see com.aastorp.linguistics.Linguist#work()
 	 */
 	@Override

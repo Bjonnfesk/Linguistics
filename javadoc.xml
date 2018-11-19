@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" additionalparam="-format pdf &#13;&#10;-out ..\documentation.pdf" classpath="../aurigadoclet/lib/fop.jar;../aurigadoclet/lib/Tidy.jar;../aurigadoclet/lib/avalon-framework-cvs-20020806.jar;../aurigadoclet/bin/AurigaDoclet.jar;../aurigadoclet/lib/batik.jar;../aurigadoclet/lib/ss_css2.jar;../aurigadoclet/lib/jakarta-oro-2.0.6.jar;../aurigadoclet/lib/xerces-1.2.3.jar;../aurigadoclet/lib/xalan-2.0.0.jar" sourcefiles="src/com/aastorp/linguistics/Padder.java,src/com/aastorp/linguistics/Wrapper.java,src/com/aastorp/linguistics/Inflector.java,src/com/aastorp/linguistics/Linguist.java,src/com/aastorp/linguistics/TextFormatter.java,src/com/aastorp/linguistics/WidthTextFormatter.java" sourcepath="src">
+            <doclet name="com.aurigalogic.doclet.core.Doclet" path="C:\Users\Admin\workspace\aurigadoclet\bin\AurigaDoclet.jar"/>
+        </javadoc>
+    </target>
+</project>

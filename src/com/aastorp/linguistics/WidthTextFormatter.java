@@ -1,10 +1,20 @@
 package com.aastorp.linguistics;
 
+/**
+ * Base class for WidthTextFormatters, TextFormatters that format
+ * based on width (in characters).
+ */
 public abstract class WidthTextFormatter extends TextFormatter {
 
 	/**  The width of the resulting String. */
 	private int width;
 
+	/**
+	 * Instantiates a new width text formatter.
+	 *
+	 * @param unmodifiedString the unmodified string
+	 * @param width the width
+	 */
 	public WidthTextFormatter(String unmodifiedString, int width) {
 		super(unmodifiedString);
 		this.setWidth(width);

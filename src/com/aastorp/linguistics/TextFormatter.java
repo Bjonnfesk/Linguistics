@@ -11,6 +11,8 @@ public abstract class TextFormatter extends Linguist {
 
 	/**
 	 * Instantiates a new text formatter.
+	 * 
+	 * @param unmodifiedString The new unmodified String.
 	 */
 	public TextFormatter(String unmodifiedString) {
 		this.setUnmodifiedString(unmodifiedString);

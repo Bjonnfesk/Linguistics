@@ -4,7 +4,7 @@
 package com.aastorp.linguistics;
 
 /**
- * Pads a String (with spaces by default) to the specified length, either on 
+ * Pads a String (with spaces by default) to the specified width, either on 
  * the left side, right side or so the String is centred, trimming the String 
  * if it is too long. If the String ends in "()", Padder assumes 
  * it is a function name, and will retain the suffix even if these 
@@ -63,9 +63,9 @@ public class Padder extends WidthTextFormatter {
 		case "right":
 			return this.rightPad();
 		case "center": 
-			return this.centerPad();
+			return this.centrePad();
 		case "centre": 
-			return this.centerPad();
+			return this.centrePad();
 		default:
 			return "Invalid pad side, valid pad sides are: \"left\", \"right\" and \"center\"/\"centre\"";
 		}
@@ -116,7 +116,7 @@ public class Padder extends WidthTextFormatter {
 	 *
 	 * @return The padded String
 	 */
-	private String centerPad() {
+	private String centrePad() {
 		if (
 			this.getUnmodifiedString() == null || 
 			this.getWidth() <= this.getUnmodifiedString().length()
@@ -139,7 +139,7 @@ public class Padder extends WidthTextFormatter {
 	}
 
 	/**
-	 * Right-pad a String to the specified length If the String is too long, 
+	 * Right-pad a String to the specified length. If the String is too long, 
 	 * it will be trimmed. If the String ends in "()", leftPad() assumes it 
 	 * is a function name, and will retain the suffix even if these characters 
 	 * would normally be removed due to the String being too long.
@@ -188,7 +188,7 @@ public class Padder extends WidthTextFormatter {
 		case 1:
 			return "right";
 		case 2:
-			return "center";
+			return "centre";
 		default:
 			return "?";
 		}
@@ -208,6 +208,9 @@ public class Padder extends WidthTextFormatter {
 			this.ps = 1;
 			break;
 		case "center":
+			this.ps = 2;
+			break;
+		case "centre":
 			this.ps = 2;
 			break;
 		default:
